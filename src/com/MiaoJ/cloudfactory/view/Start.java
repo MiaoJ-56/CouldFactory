@@ -2,7 +2,10 @@ package com.MiaoJ.cloudfactory.view;
 
 import com.MiaoJ.cloudfactory.domain.Login;
 import com.MiaoJ.cloudfactory.service.LoginService;
+import com.MiaoJ.cloudfactory.service.RegisterService;
 import com.MiaoJ.cloudfactory.utils.Utility;
+
+import java.util.Date;
 
 public class Start {
     public static void main(String[] args) {
@@ -11,6 +14,86 @@ public class Start {
 
 
     private LoginService loginService = new LoginService();
+    private RegisterService registerService = new RegisterService();
+
+    //注册
+    public void register(){
+        boolean flag = true;
+        while (flag){
+            System.out.println("1.云工厂管理员");
+            System.out.println("2.经销商");
+            System.out.println("3.返回上一级");
+            System.out.print("请选择注册类型");
+            int key = Utility.readInt();
+
+            String account = "";
+            String passwd = "";
+            String actor = "";
+            Login login = null;
+            String name = "";
+            String phone = "";
+            Date birthday = null;
+            String factoryName = "";
+            String factoryIntr = "";
+
+            switch (key){
+
+                case 1:
+                    System.out.print("请输入账号");
+                    account = Utility.readString(15);
+                    System.out.print("请输入密码");
+                    passwd = Utility.readString(15);
+                    System.out.print("请输入名字");
+                    name = Utility.readString(15);
+
+                    System.out.print("请输入电话号码");
+                    phone = Utility.readString(15);
+                    //生日
+
+                    System.out.print("请输入公司名称");
+                    factoryName = Utility.readString(15);
+                    System.out.print("请输入公司简介");
+                    factoryIntr = Utility.readString(15);
+
+
+                    //String account, String passwd, String actor,String name, String phone, Date birthday,String factoryName,String factoryIntr
+                    boolean result = registerService.register(account, passwd, "云工厂管理员", name, phone, birthday, factoryName, factoryIntr);
+                    if(result){
+                        System.out.println(account + "注册成功");
+                    }else {
+//                        System.out.println("密码输入错误");
+                    }
+                    break;
+                case 2:
+                    System.out.print("请输入账号");
+                    account = Utility.readString(15);
+                    System.out.print("请输入密码");
+                    passwd = Utility.readString(15);
+                    System.out.print("请输入名字");
+                    name = Utility.readString(15);
+                    System.out.print("请输入电话号码");
+                    phone = Utility.readString(15);
+                    //生日
+
+                    //String account, String passwd, String actor,String name, String phone, Date birthday,String factoryName,String factoryIntr
+                    boolean result2 = registerService.register(account, passwd, "经销商", name, phone, birthday, factoryName, factoryIntr);
+                    if(result2){
+                        System.out.println(account + "注册成功");
+                    }else {
+//                        System.out.println("密码输入错误");
+                    }
+                    break;
+                case 3:
+                    flag = false;
+                    System.out.println("返回");
+                    break;
+                default:
+                    System.out.println("输入错误，请重输");
+                    break;
+            }
+        }
+
+    }
 
     //登录
     public void logIn(){
@@ -150,6 +233,7 @@ public class Start {
             switch (key){
                 case 1:
                     System.out.println("注册功能");
+                    register();
                     break;
                 case 2:
                     System.out.println("登录");
